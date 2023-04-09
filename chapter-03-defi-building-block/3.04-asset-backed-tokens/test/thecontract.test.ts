@@ -30,43 +30,43 @@ let assetToken: BUSD
 let myToken: MyToken
 
 beforeEach(async () => {
-  const actors = await testActors(web3)
+  const actors = await testActors(web3) // Get test actors
   // 1. Deploy BUSD faucet as asset token
-  assetToken = new web3.eth.Contract(BUSDContract.abi as AbiItem[]) as any as BUSD
-  assetToken = await assetToken.deploy({data: BUSDContract.bytecode, arguments:[]})
+  assetToken = new web3.eth.Contract(BUSDContract.abi as AbiItem[]) as any as BUSD // Create contract instance
+  assetToken = await assetToken.deploy({data: BUSDContract.bytecode, arguments:[]}) // Deploy contract
     .send(actors.ownerTx) as any as BUSD
 
   // 2. Get address of back asset
-  const assetAddr = assetToken.options.address
+  const assetAddr = assetToken.options.address // Get address of asset token
   
   // 3. Deploy myToken contract
-  myToken = new web3.eth.Contract(MyTokenContract.abi as AbiItem[]) as any as MyToken
-  myToken = await myToken.deploy({data: MyTokenContract.bytecode, arguments:[assetAddr]})
+  myToken = new web3.eth.Contract(MyTokenContract.abi as AbiItem[]) as any as MyToken // Create contract instance
+  myToken = await myToken.deploy({data: MyTokenContract.bytecode, arguments:[assetAddr]}) // Deploy contract
     .send(actors.ownerTx) as any as MyToken
 })
 
 describe('My Token', () => {
   it('can mint MyToken backed by asset', async () => {
-    const actors = await testActors(web3)
+    const actors = await testActors(web3) // Get test actors
 
-    const myTokenAddr = myToken.options.address
+    const myTokenAddr = myToken.options.address // Get address of MyToken contract
 
     // 1. Mint 100 BUSD for test
-    const amount = toWei('100')
-    await assetToken.methods.mint(amount).send(actors.acc1Tx)
+    const amount = toWei('100')   // 100 BUSD
+    await assetToken.methods.mint(amount).send(actors.acc1Tx) // Mint 100 BUSD for acc1
 
     // Validate that acc1 will have 100 BUSD and 0 MyToken
-    let assetBalAcc1 = await assetToken.methods.balanceOf(actors.acc1Addr).call()
-    let assetBalContract = await assetToken.methods.balanceOf(myTokenAddr).call()
-    let myTokenBalAcc1 = await myToken.methods.balanceOf(actors.acc1Addr).call()
+    let assetBalAcc1 = await assetToken.methods.balanceOf(actors.acc1Addr).call() // acc1's BUSD balance
+    let assetBalContract = await assetToken.methods.balanceOf(myTokenAddr).call() // MyToken contract's BUSD balance
+    let myTokenBalAcc1 = await myToken.methods.balanceOf(actors.acc1Addr).call()  // acc1's MyToken balance
 
-    expect(fromWei(assetBalAcc1)).toEqual('100')
-    expect(fromWei(assetBalContract)).toEqual('0')
-    expect(fromWei(myTokenBalAcc1)).toEqual('0')
+    expect(fromWei(assetBalAcc1)).toEqual('100')  // acc1's BUSD balance
+    expect(fromWei(assetBalContract)).toEqual('0') // MyToken contract's BUSD balance
+    expect(fromWei(myTokenBalAcc1)).toEqual('0') // acc1's MyToken balance
 
     // Make deposit (exchange 100 BUSD for 100 MyToken)
-    await assetToken.methods.approve(myTokenAddr, amount).send(actors.acc1Tx)
-    await myToken.methods.deposit(amount).send(actors.acc1Tx)
+    await assetToken.methods.approve(myTokenAddr, amount).send(actors.acc1Tx) // Approve MyToken contract to spend 100 BUSD
+    await myToken.methods.deposit(amount).send(actors.acc1Tx) // Deposit 100 BUSD
 
     // Validate that acc1 will have 0 BUSD and 100 MyToken
     // and MyToken contract will have 100 BUSD back the 100 MyToken
@@ -77,5 +77,18 @@ describe('My Token', () => {
     expect(fromWei(assetBalAcc1)).toEqual('0')
     expect(fromWei(assetBalContract)).toEqual('100')
     expect(fromWei(myTokenBalAcc1)).toEqual('100')
+
+
+    await myToken.methods.withdraw(amount).send(actors.acc1Tx)
+    assetBalAcc1 = await assetToken.methods.balanceOf(actors.acc1Addr).call()
+    assetBalContract = await assetToken.methods.balanceOf(myTokenAddr).call()
+    myTokenBalAcc1 = await myToken.methods.balanceOf(actors.acc1Addr).call()
+
+    expect(fromWei(assetBalAcc1)).toEqual('100')
+    expect(fromWei(assetBalContract)).toEqual('0')
+    expect(fromWei(myTokenBalAcc1)).toEqual('0')
+
   })
+
+
 })

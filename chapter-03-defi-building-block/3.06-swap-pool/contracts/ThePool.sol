@@ -5,9 +5,10 @@ import './LPToken.sol';
 import '@openzeppelin/contracts/token/ERC20/IERC20.sol';
 import "@openzeppelin/contracts/utils/math/Math.sol";
 
+// ThePool is a Uniswap-like swap pool
 contract ThePool is LPToken {
-  IERC20 private _tokenA;
-  IERC20 private _tokenB;
+  IERC20 private _tokenA;   // tokenA is the base token
+  IERC20 private _tokenB;   // tokenB is the quote token
 
   constructor(address tokenA, address tokenB) LPToken() {
     _tokenA = IERC20(tokenA);
