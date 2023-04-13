@@ -39,7 +39,7 @@ $ if [ ! -d bindings ]; then mkdir bindings ; fi
 	./abigen --abi=abigenBindings/abi/ThePool.abi --bin=abigenBindings/bin/ThePool.bin --pkg thepool --out bindings/thepool/bindings.go
 
 6. Init go module
-$ go mod init github.com/3dsinteractive/fullstackblockchain
+$ go mod init github.com/anusornc/fullstackblockchain
   go get
 
 7. Start Ganache
@@ -62,9 +62,9 @@ $ NETWORK=ganache-cli \
 	SEED_GANACHE="unveil wave nuclear maple strike prepare luxury story brush knife senior modify" \
 	SEED_BSCTEST="unveil wave nuclear maple strike prepare luxury story brush knife senior modify" \
 	SEED_BSCMAIN="" \
-	TOKENA_ADDR= \
-	TOKENB_ADDR= \
-	THEPOOL_ADDR= \
+	TOKENA_ADDR=0xE6E997703F74CD938C665b2ED45A8C49cb4ff2f6 \
+	TOKENB_ADDR=0x1848cD96a74375988C54fbdEB25885e8861aB99f \
+	THEPOOL_ADDR=0xb6b980d2B75954B16475fCaEFaF8ebDEDc7Fc2c6 \
 	go run .
 
 9.1 Explain writer file in services/writer.go
@@ -76,9 +76,9 @@ $ NETWORK=ganache-cli \
 	SEED_GANACHE="unveil wave nuclear maple strike prepare luxury story brush knife senior modify" \
 	SEED_BSCTEST="unveil wave nuclear maple strike prepare luxury story brush knife senior modify" \
 	SEED_BSCMAIN="" \
-	TOKENA_ADDR= \
-	TOKENB_ADDR= \
-	THEPOOL_ADDR= \
+	TOKENA_ADDR=0xE6E997703F74CD938C665b2ED45A8C49cb4ff2f6 \
+	TOKENB_ADDR=0x1848cD96a74375988C54fbdEB25885e8861aB99f \
+	THEPOOL_ADDR=0xb6b980d2B75954B16475fCaEFaF8ebDEDc7Fc2c6 \
 	go run .
 
 10.1 Explain reader file in services/reader.go

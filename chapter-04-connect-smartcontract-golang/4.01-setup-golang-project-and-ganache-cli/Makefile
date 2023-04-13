@@ -5,7 +5,7 @@ install-ganache:
 start-ganache:
 	ganache-cli --verbose --mnemonic "unveil wave nuclear maple strike prepare luxury story brush knife senior modify"
 go-init:
-	go mod init github.com/3dsinteractive/fullstackblockchain
+	go mod init github.com/anusornc/fullstackblockchain
 go-get:
 	go get
 go-build:

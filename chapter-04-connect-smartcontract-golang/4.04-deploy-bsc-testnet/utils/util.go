@@ -7,7 +7,7 @@ import (
 	"os"
 	"runtime"
 
-	"github.com/3dsinteractive/fullstackblockchain/consts"
+	"github.com/anusornc/fullstackblockchain/consts"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
@@ -149,10 +149,22 @@ func MySendOpt(client *ethclient.Client, network consts.Network) *bind.TransactO
 
 	auth.Nonce = big.NewInt(int64(nonce))
 	auth.Value = big.NewInt(0) // wei
+
+	// Display the wallet address
+	fmt.Println("Wallet address:", myAccount.Address.Hex())
+
+	// Show the balance of the wallet address
+	balance, err := client.BalanceAt(context.Background(), myAccount.Address, nil)
+	if err != nil {
+		LogE(err)
+	}
+	fmt.Println("Balance:", balance)
+	
+
 	if network == consts.GanacheCLI {
 		auth.GasLimit = uint64(6721975)
 	} else {
-		auth.GasLimit = uint64(8000000)
+		auth.GasLimit = uint64(47500000)
 	}
 
 	gasPrice, err := client.SuggestGasPrice(context.Background())

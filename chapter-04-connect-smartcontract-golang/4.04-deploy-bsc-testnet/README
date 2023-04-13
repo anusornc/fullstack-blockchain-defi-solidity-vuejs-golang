@@ -39,7 +39,7 @@ $ if [ ! -d bindings ]; then mkdir bindings ; fi
 	./abigen --abi=abigenBindings/abi/ThePool.abi --bin=abigenBindings/bin/ThePool.bin --pkg thepool --out bindings/thepool/bindings.go
 
 6. Init go module
-$ go mod init github.com/3dsinteractive/fullstackblockchain
+$ go mod init github.com/anusornc/fullstackblockchain
   go get
 
 7. Run go project to deploy contract (Notice NETWORK=bsctest)

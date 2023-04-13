@@ -1,13 +1,14 @@
 package main
-
+import "fmt"
 import (
-	"github.com/3dsinteractive/fullstackblockchain/consts"
-	"github.com/3dsinteractive/fullstackblockchain/services"
+	"github.com/anusornc/fullstackblockchain/consts"
+	"github.com/anusornc/fullstackblockchain/services"
 )
 
 func main() {
 	cfg := consts.NewConfig()
 	serviceID := cfg.ServiceID()
+	fmt.Printf("Starting serviceID = %s	", serviceID)	
 	switch serviceID {
 	case "reader":
 		services.NewReader(cfg).Read()

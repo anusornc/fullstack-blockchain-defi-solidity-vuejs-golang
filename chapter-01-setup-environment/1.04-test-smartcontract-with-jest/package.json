@@ -4,6 +4,7 @@
     "@types/jest": "^27.0.3",
     "@types/node": "^16.11.11",
     "@types/web3": "^1.2.2",
+    "ganache-cli": "^6.12.2",
     "jest": "^27.4.2",
     "truffle": "^5.4.22",
     "ts-jest": "^27.0.7",

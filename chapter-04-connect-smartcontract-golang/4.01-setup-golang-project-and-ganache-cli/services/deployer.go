@@ -1,8 +1,8 @@
 package services
 
 import (
-	"github.com/3dsinteractive/fullstackblockchain/consts"
-	"github.com/3dsinteractive/fullstackblockchain/utils"
+	"github.com/anusornc/fullstackblockchain/consts"
+	"github.com/anusornc/fullstackblockchain/utils"
 )
 
 type Deployer struct {
